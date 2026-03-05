@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Triple Taxation: Leasing a Vehicle in Chicago</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0f0e0c;
+    --paper: #f5f0e8;
+    --cream: #ede7d5;
+    --rule: #b8a88a;
+    --accent: #8b1a1a;
+    --accent-light: #c0392b;
+    --muted: #6b5f4e;
+    --highlight: #f0e6c8;
+    --layer1: #1a3a5c;
+    --layer2: #8b1a1a;
+    --layer3: #2d6a2d;
+    --layer-fee: #5c4a1a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  /* Subtle paper texture via SVG noise */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 60px 100px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Header ── */
+  .masthead {
+    border-top: 3px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    padding: 28px 0 22px;
+    margin-bottom: 48px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 20px;
+  }
+
+  .masthead-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .masthead h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4.5vw, 44px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .masthead h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .masthead-meta {
+    text-align: right;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+
+  /* ── Deck ── */
+  .deck {
+    font-size: 19px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.6;
+    border-left: 3px solid var(--accent);
+    padding-left: 20px;
+    margin-bottom: 48px;
+  }
+
+  /* ── Section headings ── */
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 48px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+    color: var(--ink);
+  }
+
+  h2 .section-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    font-style: italic;
+    margin: 28px 0 10px;
+    color: var(--ink);
+  }
+
+  p { margin-bottom: 16px; }
+
+  /* ── Tax Layer Cards ── */
+  .layer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 28px 0;
+  }
+
+  .layer-card {
+    padding: 20px 22px;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .layer-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+  }
+
+  .layer-card.l1 { background: #e8eef5; }
+  .layer-card.l1::before { background: var(--layer1); }
+
+  .layer-card.l2 { background: #f5e8e8; }
+  .layer-card.l2::before { background: var(--layer2); }
+
+  .layer-card.l3 { background: #e8f0e8; }
+  .layer-card.l3::before { background: var(--layer3); }
+
+  .layer-card.lfee { background: #f0ece0; }
+  .layer-card.lfee::before { background: var(--layer-fee); }
+
+  .layer-card .layer-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .layer-card.l1 .layer-tag { color: var(--layer1); }
+  .layer-card.l2 .layer-tag { color: var(--layer2); }
+  .layer-card.l3 .layer-tag { color: var(--layer3); }
+  .layer-card.lfee .layer-tag { color: var(--layer-fee); }
+
+  .layer-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .layer-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  /* ── Variable Table ── */
+  .var-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 15px;
+  }
+
+  .var-table thead tr {
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .var-table thead th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 12px 8px 0;
+    text-align: left;
+    font-weight: 400;
+  }
+
+  .var-table tbody tr {
+    border-bottom: 1px solid var(--cream);
+  }
+
+  .var-table tbody tr:hover {
+    background: var(--highlight);
+  }
+
+  .var-table td {
+    padding: 10px 12px 10px 0;
+    vertical-align: top;
+  }
+
+  .var-table .sym {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    color: var(--accent);
+    white-space: nowrap;
+    width: 110px;
+  }
+
+  .var-table .rate {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    white-space: nowrap;
+    text-align: right;
+    padding-right: 24px;
+  }
+
+  /* ── Math blocks ── */
+  .math-block {
+    background: var(--cream);
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 24px 28px;
+    margin: 24px 0;
+    overflow-x: auto;
+  }
+
+  .math-block .math-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  /* ── Financial Example ── */
+  .example-box {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 36px 40px;
+    margin: 32px 0;
+    border-radius: 2px;
+    position: relative;
+  }
+
+  .example-box .ex-header {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9a8c78;
+    margin-bottom: 20px;
+  }
+
+  .example-box h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--paper);
+    margin: 0 0 24px;
+    padding: 0;
+    border: none;
+    font-style: normal;
+  }
+
+  .ex-assumptions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 32px;
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #3a3530;
+  }
+
+  .ex-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 14px;
+    padding: 4px 0;
+    border-bottom: 1px dotted #3a3530;
+  }
+
+  .ex-row .ex-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: #9a8c78;
+    flex-shrink: 0;
+    padding-right: 10px;
+  }
+
+  .ex-row .ex-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--paper);
+    font-weight: 500;
+  }
+
+  .cost-breakdown {
+    margin-top: 24px;
+  }
+
+  .cost-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid #3a3530;
+    font-size: 15px;
+  }
+
+  .cost-row:last-of-type { border-bottom: none; }
+
+  .cost-row .cost-label {
+    color: #c8baa8;
+    line-height: 1.3;
+  }
+
+  .cost-row .cost-label small {
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #7a6c5a;
+    margin-top: 2px;
+  }
+
+  .cost-row .cost-amount {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    padding-left: 16px;
+  }
+
+  .cost-row.layer-row-1 .cost-amount { color: #7aafdf; }
+  .cost-row.layer-row-2 .cost-amount { color: #e07a7a; }
+  .cost-row.layer-row-3 .cost-amount { color: #7ac47a; }
+  .cost-row.fee-row .cost-amount { color: #d4b87a; }
+  .cost-row.base-row .cost-amount { color: var(--paper); }
+
+  .cost-total {
+    background: #1e1a16;
+    margin: 0 -40px;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 16px;
+  }
+
+  .cost-total .total-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--paper);
+  }
+
+  .cost-total .total-amount {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--paper);
+  }
+
+  .cost-total .total-pp {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: #9a8c78;
+    margin-top: 4px;
+  }
+
+  .effective-rate {
+    background: #2a2520;
+    margin: 0 -40px -36px;
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .rate-pill {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .rate-pill .pill-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #7a6c5a;
+  }
+
+  .rate-pill .pill-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
+    font-weight: 500;
+    color: #e0d4c0;
+  }
+
+  .rate-divider { color: #3a3530; font-size: 20px; }
+
+  /* ── Audit Points ── */
+  .audit-list {
+    list-style: none;
+    margin: 16px 0;
+  }
+
+  .audit-list li {
+    padding: 14px 16px 14px 48px;
+    position: relative;
+    border-bottom: 1px solid var(--cream);
+    font-size: 15.5px;
+  }
+
+  .audit-list li:last-child { border-bottom: none; }
+
+  .audit-list li::before {
+    content: attr(data-n);
+    position: absolute;
+    left: 0;
+    top: 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--highlight);
+    width: 30px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--rule);
+  }
+
+  .audit-list li strong { color: var(--accent); font-style: italic; }
+
+  /* ── Flow Diagram ── */
+  .flow-diagram {
+    margin: 28px 0;
+    padding: 0;
+  }
+
+  .flow-step {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 0;
+  }
+
+  .flow-step-inner {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    padding: 16px 20px;
+    gap: 16px;
+    position: relative;
+  }
+
+  .flow-arrow {
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--rule);
+    font-size: 20px;
+  }
+
+  .flow-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .flow-step.fs1 .flow-step-inner { background: #e8eef5; border-left: 4px solid var(--layer1); }
+  .flow-step.fs1 .flow-badge { background: var(--layer1); color: white; }
+
+  .flow-step.fs2 .flow-step-inner { background: #f5e8e8; border-left: 4px solid var(--layer2); }
+  .flow-step.fs2 .flow-badge { background: var(--layer2); color: white; }
+
+  .flow-step.fs3 .flow-step-inner { background: #e8f0e8; border-left: 4px solid var(--layer3); }
+  .flow-step.fs3 .flow-badge { background: var(--layer3); color: white; }
+
+  .flow-step.fs4 .flow-step-inner { background: #f0ece0; border-left: 4px solid var(--layer-fee); }
+  .flow-step.fs4 .flow-badge { background: var(--layer-fee); color: white; }
+
+  .flow-text { flex: 1; font-size: 15px; line-height: 1.5; }
+  .flow-text strong { font-style: italic; }
+
+  .connector {
+    display: flex;
+    padding-left: 36px;
+    color: var(--rule);
+    font-size: 22px;
+    line-height: 1;
+    height: 20px;
+    align-items: center;
+  }
+
+  /* ── Summary Table ── */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 15px;
+  }
+
+  .summary-table thead tr {
+    border-bottom: 2px solid var(--ink);
+    border-top: 2px solid var(--ink);
+  }
+
+  .summary-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--muted);
+    padding: 10px 8px;
+    text-align: left;
+  }
+
+  .summary-table th:last-child { text-align: right; }
+
+  .summary-table td {
+    padding: 11px 8px;
+    border-bottom: 1px solid var(--cream);
+    vertical-align: middle;
+  }
+
+  .summary-table td:last-child {
+    text-align: right;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+  }
+
+  .summary-table tr.total-row td {
+    border-top: 2px solid var(--ink);
+    border-bottom: 2px solid var(--ink);
+    font-weight: 600;
+  }
+
+  .summary-table tr.total-row td:last-child {
+    color: var(--accent);
+    font-size: 16px;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+
+  /* ── Footer ── */
+  .doc-footer {
+    margin-top: 72px;
+    padding-top: 20px;
+    border-top: 2px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 24px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .footnote {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.6;
+    margin-top: 6px;
+  }
+
+  /* ── Callout ── */
+  .callout {
+    background: var(--highlight);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    padding: 18px 22px;
+    margin: 24px 0;
+    font-size: 15px;
+  }
+
+  .callout strong { color: var(--accent); }
+
+  /* ── Print ── */
+  @media print {
+    body { background: white; }
+    body::before { display: none; }
+    .example-box { background: #111; }
+  }
+
+  @media (max-width: 680px) {
+    .page { padding: 24px 20px 60px; }
+    .layer-grid { grid-template-columns: 1fr; }
+    .ex-assumptions { grid-template-columns: 1fr; }
+    .masthead { grid-template-columns: 1fr; }
+    .masthead-meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Masthead -->
+  <header class="masthead">
+    <div>
+      <div class="masthead-label">Tax Incidence Analysis · Consumer Finance</div>
+      <h1>The <em>Triple Taxation</em><br>of Chicago Vehicle Leasing</h1>
+    </div>
+    <div class="masthead-meta">
+      City of Chicago<br>
+      Cook County, Illinois<br>
+      <br>
+      Prepared for<br>
+      Consumer Reference
+    </div>
+  </header>
+
+  <!-- Deck -->
+  <p class="deck">
+    A resident who leases a vehicle and garages it within Chicago's city limits does not pay one tax — they pay three, applied in cascade, against the same underlying economic transaction. This document defines each layer, provides the formal decomposition, and illustrates the full cash impact with a worked example.
+  </p>
+
+  <!-- ── Section 1 ── -->
+  <h2><span class="section-num">§ 1</span>The Three Layers of Tax</h2>
+
+  <p>
+    Under ordinary economic analysis, a lease is a single transaction: the lessee pays periodic consideration for the right to use an asset. In Chicago, that single transaction is subject to three distinct, legally separate tax mechanisms — plus mandatory municipal fees — all of which are ultimately funded by the lessee's cash flows.
+  </p>
+
+  <div class="layer-grid">
+    <div class="layer-card l1">
+      <div class="layer-tag">Layer 1 · Input-Side</div>
+      <h4>Lessor's Acquisition Tax (Embedded Recovery)</h4>
+      <p>Illinois imposes sales/use tax when the dealership or leasing company <em>purchases</em> the vehicle. That cost is not absorbed — it is embedded in the monthly payment schedule and silently passed through to the lessee over the lease term.</p>
+    </div>
+    <div class="layer-card l2">
+      <div class="layer-tag">Layer 2 · Output-Side, State</div>
+      <h4>Illinois Sales/Use Tax on Lease Receipts</h4>
+      <p>Each monthly lease payment is itself treated as a taxable "sale" under Illinois law. The state (plus county and Regional Transportation Authority) imposes a sales/use tax on every payment, applied to the same base as Layer 1 already inflated.</p>
+    </div>
+    <div class="layer-card l3">
+      <div class="layer-tag">Layer 3 · Output-Side, Municipal</div>
+      <h4>Chicago Personal Property Lease Transaction Tax (PPLTT)</h4>
+      <p>Chicago layers an <em>additional</em> 15% lease transaction tax on top of the same monthly payment base. This tax applies citywide to any personal property lease, with the lessee bearing the economic incidence regardless of who formally remits it.</p>
+    </div>
+    <div class="layer-card lfee">
+      <div class="layer-tag">+ Mandatory Fees</div>
+      <h4>City Sticker &amp; Enforcement Fines</h4>
+      <p>Beyond taxes, Chicago requires an annual vehicle sticker ($148.60 for most vehicles) and residents incur statistically predictable parking and traffic fines. These are not "taxes" strictly but are jurisdiction-specific, recurring, vehicle-use costs.</p>
+    </div>
+  </div>
+
+  <!-- ── Section 2 ── -->
+  <h2><span class="section-num">§ 2</span>Variable Definitions</h2>
+
+  <p>For a passenger vehicle leased and garaged in the City of Chicago, the following variables are defined. All rates reflect the current applicable schedule.</p>
+
+  <table class="var-table">
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Definition</th>
+        <th style="text-align:right;padding-right:0">Current Rate / Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="sym">PP</td>
+        <td>Contractual base monthly lease payment — exclusive of all explicit taxes and fees. This is the "pure" economic lease charge.</td>
+        <td class="rate">Variable</td>
+      </tr>
+      <tr>
+        <td class="sym">T<sub>bank</sub></td>
+        <td>Implicit monthly recovery of lessor's up-front Illinois sales/use tax on vehicle acquisition, allocated over the lease term. Embedded in PP; not labeled "tax" on the invoice.</td>
+        <td class="rate">≈ 6.25% of vehicle cost ÷ term</td>
+      </tr>
+      <tr>
+        <td class="sym">r<sub>IL</sub></td>
+        <td>Effective Illinois state + Cook County + RTA sales/use tax rate applied to each lease payment receipt.</td>
+        <td class="rate">10.25%</td>
+      </tr>
+      <tr>
+        <td class="sym">r<sub>CHI</sub></td>
+        <td>Chicago Personal Property Lease Transaction Tax (PPLTT) rate, applied to the same lease charge base as r<sub>IL</sub>.</td>
+        <td class="rate">15.00%</td>
+      </tr>
+      <tr>
+        <td class="sym">C<sub>sticker</sub></td>
+        <td>Annual City of Chicago vehicle sticker fee (standard passenger vehicle).</td>
+        <td class="rate">$148.60 / yr</td>
+      </tr>
+      <tr>
+        <td class="sym">N<sub>tickets</sub> · F̄</td>
+        <td>Expected annual parking/traffic fine burden; long-run average tickets multiplied by average fine. Used in allocation analysis.</td>
+        <td class="rate">~$300–$600 / yr (estimated)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ── Section 3 ── -->
+  <h2><span class="section-num">§ 3</span>Formal Decomposition</h2>
+
+  <p>
+    From the lessee's perspective, the effective monthly cost of operating the leased vehicle in Chicago decomposes as follows. Each term is labeled by its economic character.
+  </p>
+
+  <div class="math-block">
+    <div class="math-label">Eq. 1 — Monthly Cost Decomposition</div>
+    $$
+    \underbrace{P}_{\text{economic lease charge}}
+    + \underbrace{T_{\text{bank}}}_{\text{embedded acquisition tax recovery}}
+    + \underbrace{P \cdot r_{IL}}_{\text{state sales/use tax on lease receipts}}
+    + \underbrace{P \cdot r_{CHI}}_{\text{Chicago PPLTT on same base}}
+    + \underbrace{\frac{C_{\text{sticker}}}{12}}_{\text{allocated city sticker}}
+    + \underbrace{\frac{N_{\text{tickets}} \cdot \bar{F}}{12}}_{\text{allocated expected fines}}
+    $$
+  </div>
+
+  <p>
+    The effective tax and quasi-tax burden per month — i.e., the amount above the bare economic lease charge — is:
+  </p>
+
+  <div class="math-block">
+    <div class="math-label">Eq. 2 — Monthly Tax Burden</div>
+    $$
+    \text{Tax Burden} = T_{\text{bank}} + P \cdot r_{IL} + P \cdot r_{CHI} + \frac{C_{\text{sticker}}}{12} + \frac{N_{\text{tickets}} \cdot \bar{F}}{12}
+    $$
+  </div>
+
+  <div class="callout">
+    <strong>Key observation:</strong> Both \(P \cdot r_{IL}\) and \(P \cdot r_{CHI}\) are computed against the <em>same base</em> — the monthly lease payment \(P\). This is not coincidental stacking; it is two independent tax authorities each asserting a full consumption-type levy on the same periodic cash flow.
+  </div>
+
+  <!-- ── Section 4 ── -->
+  <h2><span class="section-num">§ 4</span>Layering Mechanism (Causal Flow)</h2>
+
+  <div class="flow-diagram">
+    <div class="flow-step fs1">
+      <div class="flow-step-inner">
+        <div class="flow-badge">Layer 1</div>
+        <div class="flow-text"><strong>Acquisition event.</strong> Lessor buys the vehicle; Illinois charges ~6.25% sales/use tax on the purchase price. Lessor allocates this cost across 36–48 monthly payments as T<sub>bank</sub>. It appears nowhere on the customer's invoice as "tax."</div>
+      </div>
+    </div>
+    <div class="connector">↓</div>
+    <div class="flow-step fs2">
+      <div class="flow-step-inner">
+        <div class="flow-badge">Layer 2</div>
+        <div class="flow-text"><strong>Each lease payment.</strong> Illinois treats the lease payment as a taxable transaction. The state (+ Cook County + RTA) assesses 10.25% on every dollar the lessee pays. This is an explicit line item on the lease invoice.</div>
+      </div>
+    </div>
+    <div class="connector">↓</div>
+    <div class="flow-step fs3">
+      <div class="flow-step-inner">
+        <div class="flow-badge">Layer 3</div>
+        <div class="flow-text"><strong>Chicago's independent levy.</strong> Separately, Chicago's PPLTT applies 9% to the same monthly payment. It does not care that state tax already applies. Both taxes share the same base; neither credits against the other.</div>
+      </div>
+    </div>
+    <div class="connector">↓</div>
+    <div class="flow-step fs4">
+      <div class="flow-step-inner">
+        <div class="flow-badge">+ Fees</div>
+        <div class="flow-text"><strong>Mandatory annual charges.</strong> The city sticker ($148.60/yr) and statistically expected enforcement fines add a jurisdiction-specific usage cost independent of the vehicle's value or lease amount.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Section 5: Financial Example ── -->
+  <h2><span class="section-num">§ 5</span>Worked Financial Example</h2>
+
+  <p>
+    The following example applies the decomposition to a realistic mid-range vehicle lease. All assumptions are stated explicitly so the arithmetic can be audited independently.
+  </p>
+
+  <div class="example-box">
+    <div class="ex-header">Worked Example · Passenger Vehicle · Chicago, IL</div>
+    <h3>2024 BMW 3 Series — 36-Month Lease</h3>
+
+    <div class="ex-assumptions">
+      <div>
+        <div class="ex-row">
+          <span class="ex-label">MSRP</span>
+          <span class="ex-val">$47,000</span>
+        </div>
+        <div class="ex-row">
+          <span class="ex-label">Base monthly payment (PP)</span>
+          <span class="ex-val">$599.00</span>
+        </div>
+        <div class="ex-row">
+          <span class="ex-label">Lease term</span>
+          <span class="ex-val">36 months</span>
+        </div>
+        <div class="ex-row">
+          <span class="ex-label">Garaged in</span>
+          <span class="ex-val">Chicago, IL 60614</span>
+        </div>
+      </div>
+      <div>
+        <div class="ex-row">
+          <span class="ex-label">IL acquisition tax (6.25% × $47k ÷ 36)</span>
+          <span class="ex-val">≈ $81.60 / mo</span>
+        </div>
+        <div class="ex-row">
+          <span class="ex-label">IL sales/use rate (r<sub>IL</sub>)</span>
+          <span class="ex-val">10.25%</span>
+        </div>
+        <div class="ex-row">
+          <span class="ex-label">Chicago PPLTT rate (r<sub>CHI</sub>)</span>
+          <span class="ex-val">15.00%</span>
+        </div>
+        <div class="ex-row">
+          <span class="ex-label">City sticker (annual ÷ 12)</span>
+          <span class="ex-val">$12.38 / mo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cost-breakdown">
+      <div class="cost-row base-row">
+        <div class="cost-label">
+          Base monthly lease payment
+          <small>PP — pure economic lease charge</small>
+        </div>
+        <div class="cost-amount">$599.00</div>
+      </div>
+
+      <div class="cost-row layer-row-1">
+        <div class="cost-label">
+          + Layer 1: Embedded acquisition tax recovery
+          <small>T<sub>bank</sub> = 6.25% × $47,000 ÷ 36 — invisible on invoice</small>
+        </div>
+        <div class="cost-amount">+$81.60</div>
+      </div>
+
+      <div class="cost-row layer-row-2">
+        <div class="cost-label">
+          + Layer 2: Illinois sales/use tax on lease receipts
+          <small>PP × r<sub>IL</sub> = $599 × 10.25%</small>
+        </div>
+        <div class="cost-amount">+$61.40</div>
+      </div>
+
+      <div class="cost-row layer-row-3">
+        <div class="cost-label">
+          + Layer 3: Chicago PPLTT
+          <small>PP × r<sub>CHI</sub> = $599 × 15.00%</small>
+        </div>
+        <div class="cost-amount">+$89.85</div>
+      </div>
+
+      <div class="cost-row fee-row">
+        <div class="cost-label">
+          + City sticker (allocated monthly)
+          <small>$148.60 ÷ 12</small>
+        </div>
+        <div class="cost-amount">+$12.38</div>
+      </div>
+    </div>
+
+    <div class="cost-total">
+      <div>
+        <div class="total-label">Total effective monthly cost</div>
+        <div class="total-pp" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7a6c5a;margin-top:4px;">$844.23 vs. stated payment of $599.00</div>
+      </div>
+      <div style="text-align:right">
+        <div class="total-amount">$844.23 / mo</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7a6c5a;margin-top:4px;">$30,392.28 over 36 months</div>
+      </div>
+    </div>
+
+    <div class="effective-rate">
+      <div class="rate-pill">
+        <div class="pill-label">Tax &amp; Fee Burden</div>
+        <div class="pill-val">$245.23 / mo</div>
+      </div>
+      <div class="rate-divider">·</div>
+      <div class="rate-pill">
+        <div class="pill-label">Effective Rate on PP</div>
+        <div class="pill-val">40.9%</div>
+      </div>
+      <div class="rate-divider">·</div>
+      <div class="rate-pill">
+        <div class="pill-label">Explicit Tax Rate (Layers 2+3)</div>
+        <div class="pill-val">25.25%</div>
+      </div>
+      <div class="rate-divider">·</div>
+      <div class="rate-pill">
+        <div class="pill-label">Total Extra Paid Over Term</div>
+        <div class="pill-val">$8,828.28</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <table class="summary-table">
+    <thead>
+      <tr>
+        <th style="width:24px"></th>
+        <th>Component</th>
+        <th>Character</th>
+        <th>Monthly</th>
+        <th>36-Month Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="dot" style="background:#444"></span></td>
+        <td>Base payment (PP)</td>
+        <td style="font-size:13px;color:var(--muted)">Economic lease charge</td>
+        <td>$599.00</td>
+        <td>$21,564.00</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--layer1)"></span></td>
+        <td>Layer 1: Acquisition tax recovery</td>
+        <td style="font-size:13px;color:var(--muted)">Embedded input-side tax</td>
+        <td>$81.60</td>
+        <td>$2,937.60</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--layer2)"></span></td>
+        <td>Layer 2: IL sales/use tax</td>
+        <td style="font-size:13px;color:var(--muted)">Explicit state output tax</td>
+        <td>$61.40</td>
+        <td>$2,210.40</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--layer3)"></span></td>
+        <td>Layer 3: Chicago PPLTT</td>
+        <td style="font-size:13px;color:var(--muted)">Explicit municipal output tax</td>
+        <td>$89.85</td>
+        <td>$3,234.60</td>
+      </tr>
+      <tr>
+        <td><span class="dot" style="background:var(--layer-fee)"></span></td>
+        <td>City sticker (allocated)</td>
+        <td style="font-size:13px;color:var(--muted)">Mandatory jurisdiction fee</td>
+        <td>$12.38</td>
+        <td>$445.68</td>
+      </tr>
+      <tr class="total-row">
+        <td></td>
+        <td><strong>Total effective cost</strong></td>
+        <td style="font-size:13px;color:var(--muted)">All-in lessee cash outflow</td>
+        <td><strong>$844.23</strong></td>
+        <td><strong>$30,392.28</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ── Section 6 ── -->
+  <h2><span class="section-num">§ 6</span>Audit-Language Characterization</h2>
+
+  <p>
+    An accountant examining this transaction under an incidence-based framework — asking <em>who ultimately bears the tax cost</em> rather than <em>who formally remits to the government</em> — would note the following:
+  </p>
+
+  <ol class="audit-list">
+    <li data-n="I">
+      <strong>Embedded tax component (T<sub>bank</sub>):</strong> The acquisition tax is not presented as "tax" on the customer invoice. It is folded into the contractual payment PP, inflating the apparent lease charge relative to a zero-tax baseline. The lessee bears it economically without knowing the exact amount.
+    </li>
+    <li data-n="II">
+      <strong>Concurrent stacking on identical base:</strong> Both \(P \cdot r_{IL}\) and \(P \cdot r_{CHI}\) apply to the same lease charge base PP. Neither tax credits against the other. The combined explicit rate is 10.25% + 15.00% = <strong>25.25%</strong> — applied every month, on every payment, for the life of the lease.
+    </li>
+    <li data-n="III">
+      <strong>Cascading base problem:</strong> Because T<sub>bank</sub> is embedded in PP before the output-side taxes are applied, the state and municipal taxes are technically assessed against a base that <em>already includes</em> a passed-through tax cost. This is tax-on-tax in economic substance, even if not in the formal statutory definition.
+    </li>
+    <li data-n="IV">
+      <strong>Mandatory fees as quasi-taxes:</strong> The vehicle sticker and expected enforcement fines are not "taxes" in the narrow statutory sense. However, from a cost-of-use standpoint they function identically: they are mandatory, recurring, jurisdiction-specific charges that arise solely because the vehicle is registered and operated within Chicago's borders.
+    </li>
+    <li data-n="V">
+      <strong>Leasing vs. purchasing distinction:</strong> A purchaser in Illinois pays sales/use tax once, at acquisition. A lessee pays the equivalent tax on every periodic payment for the entire term — structurally disadvantaging leasing as a financing mechanism relative to purchase, all else equal.
+    </li>
+  </ol>
+
+  <!-- Footer -->
+  <footer class="doc-footer">
+    <div>
+      <div>Rates current as of 2024–2025 tax year</div>
+      <div>Cook County, City of Chicago, Illinois</div>
+      <div>PPLTT: Chicago Municipal Code § 3-32</div>
+    </div>
+    <div style="text-align:right;max-width:320px">
+      <p class="footnote">
+        This document is for informational and illustrative purposes. Actual tax liability depends on specific lease terms, vehicle classification, and applicable exemptions. Consult a qualified tax advisor for jurisdiction-specific guidance.
+      </p>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
